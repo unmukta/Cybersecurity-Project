@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawCrypt - Your Ultimate Security Toolkit</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="icon" href="assets/images/favicon.ico">
+    <style>
+        /* Dark animated background styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        
+        /* Adjust header for dark theme */
+        header {
+            background-color: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo, .footer-logo {
+            color: #ffffff;
+        }
+        
+        .logo span, .footer-logo span {
+            color: #4facfe;
+        }
+        
+        nav ul li a {
+            color: #ffffff;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            color: #4facfe;
+        }
+        
+        /* Home page dark theme styles */
+        .hero {
+            background: linear-gradient(135deg, #0f3460, #16213e);
+            color: white;
+        }
+        
+        .features {
+            background-color: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .features h2, .how-it-works h2 {
+            color: #ffffff;
+        }
+        
+        .feature-card {
+            background-color: rgba(31, 31, 56, 0.7);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            color: #e0e0e0;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .feature-card .icon {
+            background-color: rgba(79, 172, 254, 0.1);
+        }
+        
+        .feature-card h3 {
+            color: #ffffff;
+        }
+        
+        .feature-link {
+            color: #4facfe;
+        }
+        
+        .how-it-works {
+            background-color: rgba(31, 31, 56, 0.6);
+        }
+        
+        .step {
+            background-color: rgba(31, 31, 56, 0.7);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            color: #e0e0e0;
+        }
+        
+        .step-number {
+            background-color: #4facfe;
+        }
+        
+        footer {
+            background-color: rgba(26, 26, 46, 0.9);
+            color: #e0e0e0;
+        }
+        
+        .footer-links ul li a {
+            color: #e0e0e0;
+        }
+        
+        .footer-links ul li a:hover {
+            color: #4facfe;
+        }
+        
+        /* Home page specific styles */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .features {
+            padding: 80px 0;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            border-radius: 10px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-card .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .feature-card .icon img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #a0a0a0;
+            margin-bottom: 20px;
+        }
+
+        .feature-link {
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .feature-link:hover {
+            text-decoration: underline;
+        }
+
+        .how-it-works {
+            padding: 80px 0;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            counter-reset: step-counter;
+        }
+
+        .step {
+            position: relative;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .step h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <div class="container">
+            <div class="logo">Paw<span>Crypt</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="text-encrypt.html">Text Encryption</a></li>
+                    <li><a href="image-encrypt.html">Image Encryption</a></li>
+                    <li><a href="password-analyzer.html">Password Analyzer</a></li>
+                    <li><a href="chatbot.html">AI Assistant</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="terms.html">Terms & Conditions</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Advanced Security Tools at Your Fingertips</h1>
+                <p>Protect your sensitive data with military-grade encryption and powerful analysis tools</p>
+                <div class="cta-buttons">
+                    <a href="text-encrypt.html" class="btn">Encrypt Text</a>
+                    <a href="password-analyzer.html" class="btn secondary">Check Password</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <h2>Our Security Solutions</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="icon"><img src="assets/images/text-encryption.svg" alt="Text Encryption"></div>
+                        <h3>Text Encryption</h3>
+                        <p>Secure your messages with AES-256, RSA, or custom cipher algorithms.</p>
+                        <a href="text-encrypt.html" class="feature-link">Try it now →</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon"><img src="assets/images/image-encryption.svg" alt="Image Encryption"></div>
+                        <h3>Image Encryption</h3>
+                        <p>Protect sensitive images with strong encryption and password protection.</p>
+                        <a href="image-encrypt.html" class="feature-link">Try it now →</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon"><img src="assets/images/password-analyzer.svg" alt="Password Analyzer"></div>
+                        <h3>Password Analyzer</h3>
+                        <p>Check your password strength and get instant improvement suggestions.</p>
+                        <a href="password-analyzer.html" class="feature-link">Try it now →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <div class="container">
+                <h2>How PawCrypt Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Choose Your Tool</h3>
+                        <p>Select from our suite of security tools based on your needs.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Input Your Data</h3>
+                        <p>Enter text, upload images, or type passwords to analyze.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Get Protected</h3>
+                        <p>Receive encrypted output or detailed security analysis instantly.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Paw<span>Crypt</span></div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="text-encrypt.html">Text Encryption</a></li>
+                        <li><a href="image-encrypt.html">Image Encryption</a></li>
+                        <li><a href="password-analyzer.html">Password Analyzer</a></li>
+                        <li><a href="chatbot.html">AI Assistant</a></li>
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><img src="assets/images/twitter.svg" alt="Twitter"></a>
+                    <a href="#"><img src="assets/images/github.svg" alt="GitHub"></a>
+                    <a href="#"><img src="assets/images/linkedin.svg" alt="LinkedIn"></a>
+                </div>
+                <div class="legal">
+                    <p>&copy; 2025 PawCrypt. All rights reserved.</p>
+                    <p><a href="terms.html">Terms of Service</a> | <a href="#">Privacy Policy</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Particles.js for animated background -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#4facfe"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#4facfe",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+        
+        // Mobile menu functionality
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

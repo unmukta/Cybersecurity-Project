@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | PawCrypt</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="icon" href="assets/images/favicon.ico">
+    <style>
+        /* Dark animated background styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        
+        /* Adjust header for dark theme */
+        header {
+            background-color: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo, .footer-logo {
+            color: #ffffff;
+        }
+        
+        .logo span, .footer-logo span {
+            color: #4facfe;
+        }
+        
+        nav ul li a {
+            color: #ffffff;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            color: #4facfe;
+        }
+        
+        /* Contact page dark theme styles */
+        .contact-section h1 {
+            color: #ffffff;
+        }
+        
+        .subtitle {
+            color: #a0a0a0;
+        }
+        
+        .contact-form, .contact-info, .faq-section {
+            background-color: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            color: #e0e0e0;
+        }
+        
+        .form-group label {
+            color: #e0e0e0;
+        }
+        
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            background-color: rgba(31, 31, 56, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+        }
+        
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+        }
+        
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #a0a0a0;
+        }
+        
+        .success-message h3 {
+            color: #4facfe;
+        }
+        
+        .info-icon {
+            background-color: rgba(79, 172, 254, 0.1);
+        }
+        
+        .info-card h3 {
+            color: #ffffff;
+        }
+        
+        .info-card p {
+            color: #a0a0a0;
+        }
+        
+        .info-card a {
+            color: #4facfe;
+        }
+        
+        .faq-question {
+            background-color: rgba(31, 31, 56, 0.7);
+            color: #ffffff;
+        }
+        
+        .faq-question:hover {
+            background-color: rgba(79, 172, 254, 0.2);
+        }
+        
+        .faq-answer {
+            color: #e0e0e0;
+        }
+        
+        .toggle-icon {
+            color: #4facfe;
+        }
+        
+        footer {
+            background-color: rgba(26, 26, 46, 0.9);
+            color: #e0e0e0;
+        }
+        
+        .footer-links ul li a {
+            color: #e0e0e0;
+        }
+        
+        .footer-links ul li a:hover {
+            color: #4facfe;
+        }
+        
+        /* Contact page specific styles */
+        .contact-section {
+            padding: 60px 0;
+        }
+
+        .contact-section h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .contact-form {
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .success-message img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        .success-message h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .contact-info {
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .contact-info h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .info-card {
+            margin-bottom: 30px;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .info-icon img {
+            width: 25px;
+            height: 25px;
+        }
+
+        .info-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            margin-bottom: 8px;
+        }
+
+        .info-card a {
+            text-decoration: none;
+        }
+
+        .info-card a:hover {
+            text-decoration: underline;
+        }
+
+        .faq-section {
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 15px 20px;
+            text-align: left;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-icon {
+            font-size: 20px;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-answer p {
+            padding: 15px 0;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+        }
+
+        .faq-item.active .toggle-icon {
+            transform: rotate(45deg);
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-section h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <div class="container">
+            <div class="logo">Paw<span>Crypt</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="text-encrypt.html">Text Encryption</a></li>
+                    <li><a href="image-encrypt.html">Image Encryption</a></li>
+                    <li><a href="password-analyzer.html">Password Analyzer</a></li>
+                    <li><a href="chatbot.html">AI Assistant</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="terms.html">Terms & Conditions</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="contact-section">
+            <div class="container">
+                <h1>Contact PawCrypt</h1>
+                <p class="subtitle">We'd love to hear from you! Reach out with questions, feedback, or partnership inquiries.</p>
+                
+                <div class="contact-container">
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name">Your Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <select id="subject" name="subject" required>
+                                    <option value="">Select a topic</option>
+                                    <option value="support">Technical Support</option>
+                                    <option value="feedback">Product Feedback</option>
+                                    <option value="partnership">Partnership Inquiry</option>
+                                    <option value="security">Security Concern</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Your Message</label>
+                                <textarea id="message" name="message" rows="6" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn primary">Send Message</button>
+                            </div>
+                        </form>
+                        <div id="formSuccess" class="success-message" style="display: none;">
+                            <img src="assets/images/success-icon.svg" alt="Success">
+                            <h3>Message Sent Successfully!</h3>
+                            <p>Thank you for contacting us. We'll get back to you soon.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <h2>Other Ways to Reach Us</h2>
+                        <div class="info-card">
+                            <div class="info-icon"><img src="assets/images/email-icon.svg" alt="Email"></div>
+                            <h3>Email</h3>
+                            <p>General Inquiries: <a href="mailto:info@cipherguard.example">unmuktad@gmail.com</a></p>
+                            <p>Support: <a href="mailto:support@cipherguard.example">unmuktad@gmail.com</a></p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-icon"><img src="assets/images/community-icon.svg" alt="Community"></div>
+                            <h3>Community</h3>
+                            <p>Join our <a href="#">Discord server</a> to connect with other users and our team</p>
+                            <p>Follow us on <a href="#">Twitter</a> for updates and security tips</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="faq-container">
+                        <div class="faq-item">
+                            <button class="faq-question">Is PawCrypt free to use?<span class="toggle-icon">+</span></button>
+                            <div class="faq-answer">
+                                <p>Yes! All of our basic security tools are completely free to use with no hidden costs. We may offer premium enterprise features in the future, but our core tools will always remain free.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">How secure is my data with your tools?<span class="toggle-icon">+</span></button>
+                            <div class="faq-answer">
+                                <p>Very secure. All encryption/decryption happens locally in your browser—your data never leaves your device or touches our servers. We use industry-standard encryption algorithms like AES-256.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">Can I use PawCrypt for commercial purposes?<span class="toggle-icon">+</span></button>
+                            <div class="faq-answer">
+                                <p>Yes, you can use our tools for both personal and commercial purposes.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">Do you offer API access to your tools?<span class="toggle-icon">+</span></button>
+                            <div class="faq-answer">
+                                <p>NO, Not currently.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">How can I contribute to PawCrypt?<span class="toggle-icon">+</span></button>
+                            <div class="faq-answer">
+                                <p>We welcome contributions! Our core libraries are open-source on GitHub. You can submit bug reports, feature requests, or code contributions there. Join our Discord to discuss development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Paw<span>Crypt</span></div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="text-encrypt.html">Text Encryption</a></li>
+                        <li><a href="image-encrypt.html">Image Encryption</a></li>
+                        <li><a href="password-analyzer.html">Password Analyzer</a></li>
+                        <li><a href="chatbot.html">AI Assistant</a></li>
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><img src="assets/images/twitter.svg" alt="Twitter"></a>
+                    <a href="#"><img src="assets/images/github.svg" alt="GitHub"></a>
+                    <a href="#"><img src="assets/images/linkedin.svg" alt="LinkedIn"></a>
+                </div>
+                <div class="legal">
+                    <p>&copy; 2025 PawCrypt. All rights reserved.</p>
+                    <p><a href="terms.html">Terms of Service</a> | <a href="#">Privacy Policy</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Particles.js for animated background -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#4facfe"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#4facfe",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+        
+        // Mobile menu functionality
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+        
+        // FAQ functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+                
+                // Close other open FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem && item.classList.contains('active')) {
+                        item.classList.remove('active');
+                    }
+                });
+            });
+        });
+        
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate form submission
+            const form = this;
+            const successMessage = document.getElementById('formSuccess');
+            
+            // Hide form and show success message
+            form.style.display = 'none';
+            successMessage.style.display = 'block';
+            
+            // Reset form after 5 seconds
+            setTimeout(() => {
+                form.reset();
+                form.style.display = 'block';
+                successMessage.style.display = 'none';
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

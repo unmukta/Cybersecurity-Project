@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | PawCrypt</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="icon" href="assets/images/favicon.ico">
+    <style>
+        /* Dark animated background styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        
+        /* Adjust header for dark theme */
+        header {
+            background-color: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo, .footer-logo {
+            color: #ffffff;
+        }
+        
+        .logo span, .footer-logo span {
+            color: #4facfe;
+        }
+        
+        nav ul li a {
+            color: #ffffff;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            color: #4facfe;
+        }
+        
+        /* Adjust content for dark theme */
+        .about-content {
+            background-color: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            color: #e0e0e0;
+        }
+        
+        .about-section h1, .mission h2, .team h2, 
+        .values h2, .technology h2, .member-card h3, 
+        .value-card h3 {
+            color: #ffffff;
+        }
+        
+        .subtitle {
+            color: #a0a0a0;
+        }
+        
+        .member-card, .value-card {
+            background-color: rgba(31, 31, 56, 0.7);
+            color: #e0e0e0;
+        }
+        
+        .member-card:hover, .value-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .role {
+            color: #4facfe;
+        }
+        
+        .bio {
+            color: #a0a0a0;
+        }
+        
+        footer {
+            background-color: rgba(26, 26, 46, 0.9);
+            color: #e0e0e0;
+        }
+        
+        .footer-links ul li a {
+            color: #e0e0e0;
+        }
+        
+        .footer-links ul li a:hover {
+            color: #4facfe;
+        }
+        
+        /* About Us page specific styles */
+        .about-section {
+            padding: 60px 0;
+        }
+
+        .about-section h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .about-content {
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .mission, .team, .values, .technology {
+            margin-bottom: 40px;
+        }
+
+        .mission h2, .team h2, .values h2, .technology h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .mission h2:after, .team h2:after, .values h2:after, .technology h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: #4facfe;
+        }
+
+        .mission p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .member-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .member-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 3px solid rgba(79, 172, 254, 0.3);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .member-card h3 {
+            margin-bottom: 5px;
+        }
+
+        .role {
+            font-weight: 500;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .bio {
+            font-size: 14px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .value-card {
+            padding: 25px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .value-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: #4facfe;
+        }
+
+        .value-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .technology ul {
+            margin-top: 20px;
+            padding-left: 20px;
+        }
+
+        .technology li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .technology li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4facfe;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .about-section h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <div class="container">
+            <div class="logo">Paw<span>Crypt</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="text-encrypt.html">Text Encryption</a></li>
+                    <li><a href="image-encrypt.html">Image Encryption</a></li>
+                    <li><a href="password-analyzer.html">Password Analyzer</a></li>
+                    <li><a href="chatbot.html">AI Assistant</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="terms.html">Terms & Conditions</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="about-section">
+            <div class="container">
+                <h1>About PawCrypt</h1>
+                <p class="subtitle">Your trusted partner in digital security</p>
+                
+                <div class="about-content">
+                    <div class="mission">
+                        <h2>Our Mission</h2>
+                        <p>At PawCrypt, we believe that security should be accessible to everyone. In an increasingly digital world, protecting your sensitive information is not just important—it's essential. Our mission is to provide powerful, easy-to-use security tools that empower individuals and businesses to take control of their digital privacy.</p>
+                        <p>We're committed to making advanced encryption and security analysis available to all, without compromising on quality or security standards.</p>
+                    </div>
+                    
+                    <div class="team">
+                        <h2>Our Team</h2>
+                        <p>PawCrypt was founded by a single developer who shares a passion for privacy and security. With years of experience in cybersecurity, we understand the challenges of keeping data safe in today's complex digital landscape.</p>
+                        <div class="team-members">
+                            <div class="member-card">
+                                <img src="assets/images/team1.png" alt="Unmukta Das">
+                                <h3>Unmukta Das</h3>
+                                <p class="role">Lead Developer</p>
+                                <p class="bio">Specializes in cryptographic implementations and secure application development.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="values">
+                        <h2>Our Values</h2>
+                        <div class="values-grid">
+                            <div class="value-card">
+                                <div class="value-icon">🔒</div>
+                                <h3>Security First</h3>
+                                <p>We prioritize your security above all else, using only proven, industry-standard encryption methods.</p>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🤝</div>
+                                <h3>Transparency</h3>
+                                <p>We believe in open communication about how our tools work and how we protect your data.</p>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🌍</div>
+                                <h3>Accessibility</h3>
+                                <p>Security tools should be available to everyone, regardless of technical expertise.</p>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">💡</div>
+                                <h3>Innovation</h3>
+                                <p>We continuously improve our tools to stay ahead of emerging security threats.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="technology">
+                        <h2>Our Technology</h2>
+                        <p>PawCrypt utilizes state-of-the-art cryptographic algorithms to ensure your data remains secure:</p>
+                        <ul>
+                            <li><strong>AES-256 Encryption:</strong> The same standard used by governments and security agencies worldwide.</li>
+                            <li><strong>Client-side Processing:</strong> All encryption happens in your browser—your data never touches our servers.</li>
+                            <li><strong>Open-source Libraries:</strong> We use and contribute to reputable open-source cryptographic projects.</li>
+                            <li><strong>Regular Audits:</strong> Our code undergoes frequent security reviews by independent experts.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Paw<span>Crypt</span></div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="text-encrypt.html">Text Encryption</a></li>
+                        <li><a href="image-encrypt.html">Image Encryption</a></li>
+                        <li><a href="password-analyzer.html">Password Analyzer</a></li>
+                        <li><a href="chatbot.html">AI Assistant</a></li>
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><img src="assets/images/twitter.svg" alt="Twitter"></a>
+                    <a href="#"><img src="assets/images/github.svg" alt="GitHub"></a>
+                    <a href="#"><img src="assets/images/linkedin.svg" alt="LinkedIn"></a>
+                </div>
+                <div class="legal">
+                    <p>&copy; 2025 PawCrypt. All rights reserved.</p>
+                    <p><a href="terms.html">Terms of Service</a> | <a href="#">Privacy Policy</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Particles.js for animated background -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#4facfe"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#4facfe",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+        
+        // Mobile menu functionality
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

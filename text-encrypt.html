@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Encryption | PawCrypt</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/text-encrypt.css">
+    <link rel="icon" href="assets/images/favicon.ico">
+    <style>
+        /* Dark animated background styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        
+        /* Adjust header for dark theme */
+        header {
+            background-color: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo, .footer-logo {
+            color: #ffffff;
+        }
+        
+        .logo span, .footer-logo span {
+            color: #4facfe;
+        }
+        
+        nav ul li a {
+            color: #ffffff;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            color: #4facfe;
+        }
+        
+        /* Text Encryption dark theme styles */
+        .text-encryption-section h1 {
+            color: #ffffff;
+        }
+        
+        .subtitle {
+            color: #a0a0a0;
+        }
+        
+        .input-section, .output-section, .info-section {
+            background-color: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            color: #e0e0e0;
+        }
+        
+        .input-section h2, .output-section h2, .info-section h3 {
+            color: #ffffff;
+        }
+        
+        textarea {
+            background-color: rgba(31, 31, 56, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        textarea:focus {
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+        }
+        
+        .option-group label {
+            color: #e0e0e0;
+        }
+        
+        .option-group select, .option-group input {
+            background-color: rgba(31, 31, 56, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+        }
+        
+        .option-group input::placeholder {
+            color: #a0a0a0;
+        }
+        
+        .info-section ul {
+            color: #e0e0e0;
+        }
+        
+        .note {
+            color: #a0a0a0;
+        }
+        
+        footer {
+            background-color: rgba(26, 26, 46, 0.9);
+            color: #e0e0e0;
+        }
+        
+        .footer-links ul li a {
+            color: #e0e0e0;
+        }
+        
+        .footer-links ul li a:hover {
+            color: #4facfe;
+        }
+        
+        /* Text Encryption page specific styles */
+        .text-encryption-section {
+            padding: 60px 0;
+        }
+
+        .text-encryption-section h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .tool-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .input-section, .output-section {
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        .input-section h2, .output-section h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            border-radius: 10px;
+            resize: vertical;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .options {
+            margin-bottom: 20px;
+        }
+
+        .option-group {
+            margin-bottom: 15px;
+        }
+
+        .option-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .option-group select, .option-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .output-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .info-section {
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .info-section h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .info-section p {
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .info-section li {
+            margin-bottom: 8px;
+        }
+
+        .info-section li strong {
+            color: #ffffff;
+        }
+
+        .note {
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .tool-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .text-encryption-section h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <div class="container">
+            <div class="logo">Paw<span>Crypt</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="text-encrypt.html">Text Encryption</a></li>
+                    <li><a href="image-encrypt.html">Image Encryption</a></li>
+                    <li><a href="password-analyzer.html">Password Analyzer</a></li>
+                    <li><a href="chatbot.html">AI Assistant</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="terms.html">Terms & Conditions</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="text-encryption-section">
+            <div class="container">
+                <h1>Text Encryption Tool</h1>
+                <p class="subtitle">Secure your sensitive messages with military-grade encryption algorithms</p>
+                
+                <div class="tool-container">
+                    <div class="input-section">
+                        <h2>Input Text</h2>
+                        <textarea id="text-input" placeholder="Enter your text here to encrypt or decrypt..."></textarea>
+                        <div class="options">
+                            <div class="option-group">
+                                <label for="encryption-method">Encryption Method:</label>
+                                <select id="encryption-method">
+                                    <option value="aes">AES-256 (Recommended)</option>
+                                    <option value="rsa">RSA</option>
+                                    <option value="caesar">Caesar Cipher</option>
+                                    <option value="xor">XOR Cipher</option>
+                                </select>
+                            </div>
+                            <div class="option-group">
+                                <label for="encryption-key">Encryption Key:</label>
+                                <input type="password" id="encryption-key" placeholder="Enter a secure key (optional)">
+                                <button id="generate-key" class="btn small">Generate Key</button>
+                            </div>
+                        </div>
+                        <div class="action-buttons">
+                            <button id="encrypt-btn" class="btn primary">Encrypt</button>
+                            <button id="decrypt-btn" class="btn secondary">Decrypt</button>
+                            <button id="clear-text" class="btn">Clear</button>
+                        </div>
+                    </div>
+                    
+                    <div class="output-section">
+                        <h2>Output Text</h2>
+                        <textarea id="text-output" readonly placeholder="Your encrypted/decrypted text will appear here..."></textarea>
+                        <div class="output-actions">
+                            <button id="copy-text" class="btn">Copy to Clipboard</button>
+                            <button id="download-text" class="btn">Download as File</button>
+                            <button id="share-text" class="btn">Share Securely</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h3>About Text Encryption</h3>
+                    <p>Our text encryption tool uses industry-standard algorithms to protect your sensitive information:</p>
+                    <ul>
+                        <li><strong>AES-256:</strong> The gold standard in symmetric encryption, used by governments worldwide.</li>
+                        <li><strong>RSA:</strong> Asymmetric encryption ideal for secure message exchange.</li>
+                        <li><strong>Caesar Cipher:</strong> A simple substitution cipher for basic obfuscation.</li>
+                        <li><strong>XOR Cipher:</strong> A lightweight cipher that's fast but less secure.</li>
+                    </ul>
+                    <p class="note"><strong>Note:</strong> All encryption/decryption happens in your browser. Your data never leaves your device.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Paw<span>Crypt</span></div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="text-encrypt.html">Text Encryption</a></li>
+                        <li><a href="image-encrypt.html">Image Encryption</a></li>
+                        <li><a href="password-analyzer.html">Password Analyzer</a></li>
+                        <li><a href="chatbot.html">AI Assistant</a></li>
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><img src="assets/images/twitter.svg" alt="Twitter"></a>
+                    <a href="#"><img src="assets/images/github.svg" alt="GitHub"></a>
+                    <a href="#"><img src="assets/images/linkedin.svg" alt="LinkedIn"></a>
+                </div>
+                <div class="legal">
+                    <p>&copy; 2025 PawCrypt. All rights reserved.</p>
+                    <p><a href="terms.html">Terms of Service</a> | <a href="#">Privacy Policy</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Particles.js for animated background -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#4facfe"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#4facfe",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+        
+        // Mobile menu functionality
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    </script>
+    
+    <!-- External JS files (unchanged) -->
+    <script src="js/main.js"></script>
+    <script src="js/text-encryption.js"></script>
+</body>
+</html>

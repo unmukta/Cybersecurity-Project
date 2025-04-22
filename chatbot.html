@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity AI Assistant | PawCrypt</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link rel="icon" href="assets/images/favicon.ico">
+    <style>
+        /* Dark animated background styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        
+        /* Adjust header for dark theme */
+        header {
+            background-color: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo, .footer-logo {
+            color: #ffffff;
+        }
+        
+        .logo span, .footer-logo span {
+            color: #4facfe;
+        }
+        
+        nav ul li a {
+            color: #ffffff;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            color: #4facfe;
+        }
+        
+        /* Chatbot specific dark theme styles */
+        .chatbot-section h1 {
+            color: #ffffff;
+        }
+        
+        .subtitle {
+            color: #a0a0a0;
+        }
+        
+        .chatbot-container {
+            background-color: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            color: #e0e0e0;
+        }
+        
+        .chatbot-header {
+            background-color: rgba(79, 172, 254, 0.9);
+            color: white;
+        }
+        
+        .chatbot-messages {
+            background-color: rgba(31, 31, 56, 0.7);
+        }
+        
+        .bot-message .message-content {
+            background-color: rgba(26, 26, 46, 0.9);
+            color: #e0e0e0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .user-message .message-content {
+            background-color: #4facfe;
+            color: white;
+        }
+        
+        .chatbot-input {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(26, 26, 46, 0.8);
+        }
+        
+        .chatbot-input textarea {
+            background-color: rgba(31, 31, 56, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+        }
+        
+        .chatbot-input textarea:focus {
+            border-color: #4facfe;
+        }
+        
+        .chatbot-input textarea::placeholder {
+            color: #a0a0a0;
+        }
+        
+        .quick-questions {
+            background-color: rgba(31, 31, 56, 0.7);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .quick-questions h3 {
+            color: #a0a0a0;
+        }
+        
+        .quick-btn {
+            background-color: rgba(26, 26, 46, 0.9);
+            border: 1px solid rgba(79, 172, 254, 0.3);
+            color: #e0e0e0;
+        }
+        
+        .quick-btn:hover {
+            background-color: #4facfe;
+            color: white;
+            border-color: #4facfe;
+        }
+        
+        .disclaimer {
+            background-color: rgba(255, 248, 225, 0.1);
+            color: #ffd54f;
+        }
+        
+        .typing-dot {
+            background-color: #a0a0a0;
+        }
+        
+        footer {
+            background-color: rgba(26, 26, 46, 0.9);
+            color: #e0e0e0;
+        }
+        
+        .footer-links ul li a {
+            color: #e0e0e0;
+        }
+        
+        .footer-links ul li a:hover {
+            color: #4facfe;
+        }
+        
+        /* Chatbot Page Styles */
+        .chatbot-section {
+            padding: 60px 0;
+        }
+
+        .chatbot-section h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .chatbot-container {
+            border-radius: 10px;
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .chatbot-header {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .chatbot-avatar {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+        }
+
+        .chatbot-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .chatbot-info {
+            flex: 1;
+        }
+
+        .chatbot-info h2 {
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+
+        .chatbot-info p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .chatbot-controls {
+            margin-left: auto;
+        }
+
+        .chatbot-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message-content p {
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+
+        .message-content ul, .message-content ol {
+            margin: 10px 0 10px 20px;
+        }
+
+        .message-content li {
+            margin-bottom: 5px;
+        }
+
+        .message-content a {
+            color: #4facfe;
+            text-decoration: none;
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .message-content a:hover {
+            text-decoration: underline;
+        }
+
+        .bot-message .message-content {
+            padding: 12px 15px;
+            border-radius: 0 10px 10px 10px;
+        }
+
+        .user-message {
+            flex-direction: row-reverse;
+        }
+
+        .user-message .message-avatar {
+            margin-right: 0;
+            margin-left: 12px;
+        }
+
+        .user-message .message-content {
+            padding: 12px 15px;
+            border-radius: 10px 0 10px 10px;
+        }
+
+        .chatbot-input {
+            display: flex;
+            padding: 15px;
+        }
+
+        .chatbot-input textarea {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            resize: none;
+            height: 50px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-input textarea:focus {
+            outline: none;
+        }
+
+        .chatbot-input button {
+            margin-left: 10px;
+            align-self: flex-end;
+        }
+
+        .quick-questions {
+            padding: 15px;
+        }
+
+        .quick-questions h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .quick-btn {
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .disclaimer {
+            max-width: 800px;
+            margin: 20px auto 0;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            padding: 10px 15px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+            margin-right: 0;
+        }
+
+        @keyframes typingAnimation {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .chatbot-section h1 {
+                font-size: 30px;
+            }
+            
+            .chatbot-messages {
+                height: 300px;
+            }
+            
+            .quick-buttons {
+                flex-direction: column;
+            }
+            
+            .quick-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <div class="container">
+            <div class="logo">Paw<span>Crypt</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="text-encrypt.html">Text Encryption</a></li>
+                    <li><a href="image-encrypt.html">Image Encryption</a></li>
+                    <li><a href="password-analyzer.html">Password Analyzer</a></li>
+                    <li><a href="chatbot.html" class="active">AI Assistant</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="chatbot-section">
+            <div class="container">
+                <h1>Cybersecurity AI Assistant</h1>
+                <p class="subtitle">Get expert advice on security best practices, threat analysis, and more</p>
+                
+                <div class="chatbot-container">
+                    <div class="chatbot-header">
+                        <div class="chatbot-avatar">
+                            <img src="assets/images/ai-avatar.svg" alt="AI Assistant">
+                        </div>
+                        <div class="chatbot-info">
+                            <h2>Paw Guard</h2>
+                            <p>Cybersecurity Expert</p>
+                        </div>
+                        <div class="chatbot-controls">
+                            <button id="clear-chat" class="btn small">Clear Chat</button>
+                        </div>
+                    </div>
+                    
+                    <div class="chatbot-messages" id="chatbot-messages">
+                        <div class="message bot-message">
+                            <div class="message-avatar">
+                                <img src="assets/images/ai-avatar.svg" alt="AI Assistant">
+                            </div>
+                            <div class="message-content">
+                                <p>Hello! I'm Paw Guard, your cybersecurity assistant. How can I help you today? Here are some things I can assist with:</p>
+                                <ul>
+                                    <li>Explain security concepts</li>
+                                    <li>Analyze potential threats</li>
+                                    <li>Recommend security practices</li>
+                                    <li>Help with security tools</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chatbot-input">
+                        <textarea id="user-input" placeholder="Ask me anything about cybersecurity..."></textarea>
+                        <button id="send-button" class="btn primary">Send</button>
+                    </div>
+                    
+                    <div class="quick-questions">
+                        <h3>Quick Questions:</h3>
+                        <div class="quick-buttons">
+                            <button class="quick-btn">How to create a strong password?</button>
+                            <button class="quick-btn">What is two-factor authentication?</button>
+                            <button class="quick-btn">How to spot phishing emails?</button>
+                            <button class="quick-btn">Best encryption practices?</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="disclaimer">
+                    <p><strong>Note:</strong> This AI assistant provides general cybersecurity information. For critical security issues, always consult with a professional.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Paw<span>Crypt</span></div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="text-encrypt.html">Text Encryption</a></li>
+                        <li><a href="image-encrypt.html">Image Encryption</a></li>
+                        <li><a href="password-analyzer.html">Password Analyzer</a></li>
+                        <li><a href="chatbot.html">AI Assistant</a></li>
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><img src="assets/images/twitter.svg" alt="Twitter"></a>
+                    <a href="#"><img src="assets/images/github.svg" alt="GitHub"></a>
+                    <a href="#"><img src="assets/images/linkedin.svg" alt="LinkedIn"></a>
+                </div>
+                <div class="legal">
+                    <p>&copy; 2025 PawCrypt. All rights reserved.</p>
+                    <p><a href="terms.html">Terms of Service</a> | <a href="#">Privacy Policy</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Particles.js for animated background -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#4facfe"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#4facfe",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+        
+        // Mobile menu functionality
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+        
+        // Chatbot functionality (basic implementation)
+        document.addEventListener('DOMContentLoaded', function() {
+            const sendButton = document.getElementById('send-button');
+            const userInput = document.getElementById('user-input');
+            const chatMessages = document.getElementById('chatbot-messages');
+            const clearChat = document.getElementById('clear-chat');
+            const quickButtons = document.querySelectorAll('.quick-btn');
+            
+            // Function to add a user message
+            function addUserMessage(message) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message user-message';
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">
+                        <img src="assets/images/user-avatar.svg" alt="User">
+                    </div>
+                    <div class="message-content">
+                        <p>${message}</p>
+                    </div>
+                `;
+                chatMessages.appendChild(messageDiv);
+                scrollToBottom();
+            }
+            
+            // Function to add a bot message
+            function addBotMessage(message) {
+                // Show typing indicator
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'typing-indicator';
+                typingDiv.innerHTML = `
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                `;
+                chatMessages.appendChild(typingDiv);
+                scrollToBottom();
+                
+                // Simulate bot thinking time
+                setTimeout(() => {
+                    // Remove typing indicator
+                    chatMessages.removeChild(typingDiv);
+                    
+                    // Add actual message
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'message bot-message';
+                    messageDiv.innerHTML = `
+                        <div class="message-avatar">
+                            <img src="assets/images/ai-avatar.svg" alt="AI Assistant">
+                        </div>
+                        <div class="message-content">
+                            <p>${message}</p>
+                        </div>
+                    `;
+                    chatMessages.appendChild(messageDiv);
+                    scrollToBottom();
+                }, 1500);
+            }
+            
+            // Function to scroll to bottom of chat
+            function scrollToBottom() {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Function to generate bot response
+            function generateBotResponse(userMessage) {
+                const lowerMessage = userMessage.toLowerCase();
+                
+                if (lowerMessage.includes('password') || lowerMessage.includes('strong')) {
+                    return "A strong password should be at least 12 characters long, include a mix of uppercase and lowercase letters, numbers, and special characters. Avoid using personal information or common words. Consider using a passphrase like 'BlueCoffeeTable$2023' which is long but easy to remember.";
+                } 
+                else if (lowerMessage.includes('two-factor') || lowerMessage.includes('2fa')) {
+                    return "Two-factor authentication (2FA) adds an extra layer of security beyond just a password. It requires two forms of identification: something you know (password) and something you have (like a code from your phone). Even if someone steals your password, they can't access your account without the second factor.";
+                }
+                else if (lowerMessage.includes('phishing') || lowerMessage.includes('email')) {
+                    return "To spot phishing emails: 1) Check the sender's email address carefully, 2) Look for poor grammar/spelling, 3) Hover over links to see the real URL, 4) Be wary of urgent requests for personal info, 5) Watch for generic greetings like 'Dear Customer'. When in doubt, contact the company directly through their official website.";
+                }
+                else if (lowerMessage.includes('encryption') || lowerMessage.includes('encrypt')) {
+                    return "Best encryption practices include: 1) Use AES-256 for sensitive data, 2) Always use SSL/TLS for data in transit, 3) Store encryption keys separately from encrypted data, 4) Regularly rotate encryption keys, 5) Use proven libraries instead of writing your own crypto, 6) Consider end-to-end encryption for maximum privacy.";
+                }
+                else {
+                    const responses = [
+                        "I'm designed to help with cybersecurity questions. Could you clarify what you need help with?",
+                        "That's an interesting question about cybersecurity. Could you provide more details so I can give you the best answer?",
+                        "I specialize in cybersecurity topics like password security, encryption, and threat prevention. What specifically would you like to know?",
+                        "For security reasons, I can't provide guidance on breaking security measures, but I'd be happy to help with legitimate security questions."
+                    ];
+                    return responses[Math.floor(Math.random() * responses.length)];
+                }
+            }
+            
+            // Send button click handler
+            sendButton.addEventListener('click', function() {
+                const message = userInput.value.trim();
+                if (message) {
+                    addUserMessage(message);
+                    userInput.value = '';
+                    
+                    // Generate and add bot response
+                    const botResponse = generateBotResponse(message);
+                    addBotMessage(botResponse);
+                }
+            });
+            
+            // Enter key handler
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendButton.click();
+                }
+            });
+            
+            // Clear chat handler
+            clearChat.addEventListener('click', function() {
+                // Keep only the first bot message
+                while (chatMessages.children.length > 1) {
+                    chatMessages.removeChild(chatMessages.lastChild);
+                }
+            });
+            
+            // Quick buttons handlers
+            quickButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const message = this.textContent;
+                    userInput.value = message;
+                    sendButton.click();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

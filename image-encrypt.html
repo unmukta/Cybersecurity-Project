@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Image Encryption | PawCrypt</title>
+    <style>
+        /* Dark animated background styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            color: #ffffff;
+            overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        
+        /* Header styles */
+        header {
+            background-color: rgba(26, 26, 46, 0.8);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: #4facfe;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            color: #4facfe;
+        }
+        
+        /* Main content styles */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Image Encryption section */
+        .image-encryption-section {
+            padding: 60px 0;
+        }
+        
+        .image-encryption-section h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #a0a0a0;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+        
+        .tool-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .upload-section, .options-section, .info-section {
+            background-color: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            color: #e0e0e0;
+            padding: 25px;
+        }
+        
+        .drop-area {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: rgba(31, 31, 56, 0.5);
+            margin-bottom: 20px;
+        }
+        
+        .drop-area:hover, .drop-area.highlight {
+            border-color: #4facfe;
+            background-color: rgba(79, 172, 254, 0.1);
+        }
+        
+        .drop-content p {
+            margin: 10px 0;
+            color: #a0a0a0;
+        }
+        
+        .drop-content .small {
+            font-size: 14px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4facfe;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #3a8fd4;
+            transform: translateY(-2px);
+        }
+        
+        .btn.primary {
+            background-color: #4facfe;
+        }
+        
+        .btn.secondary {
+            background-color: #6c757d;
+        }
+        
+        .btn.small {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+        
+        .image-preview {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: rgba(31, 31, 56, 0.5);
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+        }
+        
+        .placeholder {
+            text-align: center;
+            color: #a0a0a0;
+        }
+        
+        .placeholder img {
+            width: 60px;
+            height: 60px;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+        
+        .encrypted-preview {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .encrypted-preview img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+        }
+        
+        .encrypted-preview p {
+            color: #4facfe;
+            font-weight: 500;
+        }
+        
+        .option-group {
+            margin-bottom: 20px;
+        }
+        
+        .option-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #e0e0e0;
+            font-weight: 500;
+        }
+        
+        .option-group input, .option-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background-color: rgba(31, 31, 56, 0.7);
+            color: #e0e0e0;
+            font-size: 16px;
+        }
+        
+        .option-group input:focus, .option-group select:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .output-actions {
+            margin-top: 20px;
+        }
+        
+        .output-actions h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .download-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .security-info h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .label {
+            color: #a0a0a0;
+            font-weight: 500;
+        }
+        
+        .value {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        .info-section h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .info-section p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .info-section ol {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+        
+        .info-section li {
+            margin-bottom: 8px;
+        }
+        
+        .warning {
+            color: #ff6b6b;
+            font-weight: 500;
+        }
+        
+        /* Footer styles */
+        footer {
+            background-color: rgba(26, 26, 46, 0.9);
+            color: #e0e0e0;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 3fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-logo {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .footer-logo span {
+            color: #4facfe;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            columns: 2;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #4facfe;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .footer-social a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 24px;
+        }
+        
+        .legal {
+            grid-column: 1 / -1;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #a0a0a0;
+        }
+        
+        .legal a {
+            color: #a0a0a0;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        .legal a:hover {
+            color: #ffffff;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .tool-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .image-encryption-section h1 {
+                font-size: 30px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links ul {
+                columns: 1;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: rgba(26, 26, 46, 0.95);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                padding: 20px;
+                transform: translateY(-150%);
+                transition: all 0.3s ease;
+                z-index: 99;
+            }
+            
+            nav.active {
+                transform: translateY(0);
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                width: 30px;
+                height: 21px;
+                cursor: pointer;
+            }
+            
+            .mobile-menu-btn span {
+                display: block;
+                height: 3px;
+                width: 100%;
+                background-color: white;
+                border-radius: 3px;
+                transition: all 0.3s ease;
+            }
+            
+            .mobile-menu-btn.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .mobile-menu-btn.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .mobile-menu-btn.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+        }
+
+        /* Base64 encoded placeholder images */
+        .upload-icon {
+            width: 60px;
+            height: 60px;
+            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZmZmIiBkPSJNNDgwIDM1MmgzMnYzMmMwIDguODQzLTcuMTU3IDE2LTE2IDE2SDE2Yy04Ljg0MyAwLTE2LTcuMTU3LTE2LTE2di0zMmgzMnYtMzJoLTMydi0zMmMwLTguODQzIDcuMTU3LTE2IDE2LTE2aDMydi0zMmgzMnYzMmgzMnYtMzJoMzJ2MzJoMzJjOC44NDMgMCAxNiA3LjE1NyAxNiAxNnYzMmgtMzJ2MzJ6bS02NCA4MEgyMjR2LTk2aC05NnYtOTZoOTZ2LTk2aDk2djk2aDk2djk2aC05NnY5NnoiLz48L3N2Zz4=");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .image-placeholder {
+            width: 60px;
+            height: 60px;
+            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZmZmIiBkPSJNNDY0IDY0YzguODM3IDAgMTYgNy4xNjMgMTYgMTZ2MzUyYzAgOC44MzctNy4xNjMgMTYtMTYgMTZINDhjLTguODM3IDAtMTYtNy4xNjMtMTYtMTZWODBjMC04LjgzNyA3LjE2My0xNiAxNi0xNmg0MTZtMCAzMkg0OHYzMjBoNDE2Vjk2ek0xOTIgMTYwYzE3LjY3MyAwIDMyIDE0LjMyNyAzMiAzMnMtMTQuMzI3IDMyLTMyIDMyLTMyLTE0LjMyNy0zMi0zMiAxNC4zMjctMzIgMzItMzJtMTEyIDE2MGgtMjI0bDcxLjQzNi05NS4yNDkgMzUuNzE4IDQ3LjY1NCA2MS4zOTktODMuOTg1TDMwNCAzMjB6Ii8+PC9zdmc+");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .lock-icon {
+            width: 80px;
+            height: 80px;
+            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGZhY2ZlIiBkPSJNNDAwIDIyNGgtMjR2LTQ4QzM3NiA3OC44IDI5Ny4yIDAgMjAwIDBTMjQgNzguOCAyNCAxNzZ2NDhIMGMtMTEuMiAwLTIwIDguOC0yMCAyMHYyNDBjMCAxMS4yIDguOCAyMCAyMCAyMGg0MDBjMTEuMiAwIDIwLTguOCAyMC0yMFYyNDRjMC0xMS4yLTguOC0yMC0yMC0yMHptLTE5Mi00OGMwLTUzIDQzLTk2IDk2LTk2czk2IDQzIDk2IDk2djQ4SDIwOHYtNDh6bTE5MiAzMjBIMTIwVjI2NGgyODB2MjMyeiIvPjwvc3ZnPg==");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div id="particles-js"></div>
+    
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">Paw<span>Crypt</span></a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="text-encrypt.html">Text Encryption</a></li>
+                    <li><a href="image-encrypt.html">Image Encryption</a></li>
+                    <li><a href="password-analyzer.html">Password Analyzer</a></li>
+                    <li><a href="chatbot.html">AI Assistant</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="terms.html">Terms & Conditions</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="image-encryption-section">
+            <div class="container">
+                <h1>Secure Image Encryption</h1>
+                <p class="subtitle">Protect your sensitive images with military-grade AES-256 encryption</p>
+                
+                <div class="tool-container">
+                    <div class="upload-section">
+                        <div class="drop-area" id="drop-area">
+                            <div class="drop-content">
+                                <div class="upload-icon"></div>
+                                <p>Drag & drop your image here</p>
+                                <p class="small">or</p>
+                                <button class="btn" id="browse-btn">Browse Files</button>
+                                <input type="file" id="file-input" accept="image/*,.pawcrypt" style="display: none;">
+                            </div>
+                        </div>
+                        <div class="image-preview" id="image-preview">
+                            <div class="placeholder">
+                                <div class="image-placeholder"></div>
+                                <p>Your image preview will appear here</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="options-section">
+                        <div class="encryption-options">
+                            <h2>Encryption Options</h2>
+                            <div class="option-group">
+                                <label for="image-password">Password:</label>
+                                <input type="password" id="image-password" placeholder="Enter encryption password">
+                                <button id="generate-password" class="btn small">Generate</button>
+                            </div>
+                            <div class="option-group">
+                                <label for="encryption-strength">Encryption Strength:</label>
+                                <select id="encryption-strength">
+                                    <option value="low">AES-128 (Faster)</option>
+                                    <option value="medium" selected>AES-192 (Balanced)</option>
+                                    <option value="high">AES-256 (Strongest)</option>
+                                </select>
+                            </div>
+                            <div class="action-buttons">
+                                <button id="encrypt-image" class="btn primary">Encrypt Image</button>
+                                <button id="decrypt-image" class="btn secondary">Decrypt Image</button>
+                                <button id="clear-image" class="btn">Clear</button>
+                            </div>
+                        </div>
+                        
+                        <div class="output-actions" id="output-actions" style="display: none;">
+                            <h2>Encrypted Image</h2>
+                            <div class="download-options">
+                                <button id="download-image" class="btn">Download Encrypted File</button>
+                            </div>
+                            <div class="security-info">
+                                <h3>Security Information</h3>
+                                <div class="info-item">
+                                    <span class="label">Encryption Method:</span>
+                                    <span class="value" id="enc-method-info">AES-256</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Key Strength:</span>
+                                    <span class="value" id="key-strength-info">256-bit</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Security Level:</span>
+                                    <span class="value">Military Grade</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h3>How Our Image Encryption Works</h3>
+                    <p>Our tool uses industry-standard AES encryption with CBC mode to secure your images:</p>
+                    <ol>
+                        <li><strong>Upload</strong> your image (JPG, PNG formats supported, max 5MB)</li>
+                        <li><strong>Set a password</strong> - we generate a cryptographic key using PBKDF2 with 10,000 iterations</li>
+                        <li><strong>Choose encryption strength</strong> - AES-128, AES-192, or AES-256</li>
+                        <li><strong>Encrypt</strong> - we generate a random salt and initialization vector (IV) for each encryption</li>
+                        <li><strong>Download</strong> the encrypted .pawcrypt file containing both metadata and encrypted data</li>
+                    </ol>
+                    <p class="warning"><strong>Important Security Note:</strong> The encrypted file can only be decrypted with the exact same password. If you lose the password, the data cannot be recovered. We never store your password or encrypted files on our servers - all processing happens in your browser.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Paw<span>Crypt</span></div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="text-encrypt.html">Text Encryption</a></li>
+                        <li><a href="image-encrypt.html">Image Encryption</a></li>
+                        <li><a href="password-analyzer.html">Password Analyzer</a></li>
+                        <li><a href="chatbot.html">AI Assistant</a></li>
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <a href="#">Twitter</a>
+                    <a href="#">GitHub</a>
+                    <a href="#">LinkedIn</a>
+                </div>
+                <div class="legal">
+                    <p>&copy; 2023 PawCrypt. All rights reserved.</p>
+                    <p><a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CryptoJS from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/aes.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/pbkdf2.min.js"></script>
+    
+    <!-- Particles.js for animated background -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize particles.js
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#4facfe"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#4facfe",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+            
+            // Mobile menu functionality
+            document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+                document.querySelector('nav').classList.toggle('active');
+                this.classList.toggle('active');
+            });
+
+            // Image Encryption JavaScript
+            const dropArea = document.getElementById('drop-area');
+            const fileInput = document.getElementById('file-input');
+            const browseBtn = document.getElementById('browse-btn');
+            const imagePreview = document.getElementById('image-preview');
+            const imagePassword = document.getElementById('image-password');
+            const generatePasswordBtn = document.getElementById('generate-password');
+            const encryptImageBtn = document.getElementById('encrypt-image');
+            const decryptImageBtn = document.getElementById('decrypt-image');
+            const downloadImageBtn = document.getElementById('download-image');
+            const clearImageBtn = document.getElementById('clear-image');
+            const outputActions = document.getElementById('output-actions');
+            const encMethodInfo = document.getElementById('enc-method-info');
+            const keyStrengthInfo = document.getElementById('key-strength-info');
+            
+            let currentImage = null;
+            let encryptedImageBlob = null;
+            let originalImageFile = null;
+            let isEncryptedFile = false;
+
+            // Prevent default drag behaviors
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            // Highlight drop area when item is dragged over it
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            });
+            
+            function highlight() {
+                dropArea.classList.add('highlight');
+            }
+            
+            function unhighlight() {
+                dropArea.classList.remove('highlight');
+            }
+            
+            // Handle dropped files
+            dropArea.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                handleFiles(files);
+            }
+            
+            // Handle file selection via browse button
+            browseBtn.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', function() {
+                handleFiles(this.files);
+            });
+            
+            function handleFiles(files) {
+                if (files.length === 0) return;
+                
+                const file = files[0];
+                isEncryptedFile = false;
+                
+                // Check if it's our encrypted file format
+                if (file.type === "application/json" || file.name.endsWith('.pawcrypt')) {
+                    handleEncryptedFile(file);
+                    isEncryptedFile = true;
+                    return;
+                }
+                
+                // Otherwise treat as regular image
+                if (!file.type.match('image.*')) {
+                    showAlert('Please select an image file (JPEG, PNG) or .pawcrypt encrypted file');
+                    return;
+                }
+                
+                // Check file size (limit to 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    showAlert('File size should be less than 5MB');
+                    return;
+                }
+                
+                originalImageFile = file;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentImage = e.target.result;
+                    
+                    // Display preview
+                    displayImagePreview(currentImage);
+                    
+                    // Reset output actions
+                    outputActions.style.display = 'none';
+                    downloadImageBtn.disabled = true;
+                    encryptedImageBlob = null;
+                };
+                reader.readAsDataURL(file);
+            }
+            
+            // New function to handle encrypted files
+            function handleEncryptedFile(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        // Store the encrypted blob
+                        encryptedImageBlob = new Blob([e.target.result], { type: 'application/json' });
+                        
+                        // Display encrypted preview
+                        displayEncryptedPreview();
+                        
+                        // Show decryption options
+                        outputActions.style.display = 'block';
+                        downloadImageBtn.disabled = false;
+                        
+                        // Try to read metadata to show encryption info
+                        try {
+                            const encryptedData = JSON.parse(e.target.result);
+                            if (encryptedData.metadata) {
+                                encMethodInfo.textContent = 'AES-' + encryptedData.metadata.keySize;
+                                keyStrengthInfo.textContent = encryptedData.metadata.keySize + '-bit';
+                            }
+                        } catch (e) {
+                            console.log("Couldn't parse metadata");
+                        }
+                        
+                    } catch (error) {
+                        showAlert('This doesn\'t appear to be a valid encrypted file');
+                        console.error(error);
+                    }
+                };
+                reader.readAsText(file);
+            }
+            
+            // Generate a random password
+            generatePasswordBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const randomPassword = generateRandomPassword(16);
+                imagePassword.value = randomPassword;
+            });
+            
+            // Encrypt image
+            encryptImageBtn.addEventListener('click', async function() {
+                if (!currentImage || isEncryptedFile) {
+                    showAlert('Please upload an image to encrypt first');
+                    return;
+                }
+                
+                const password = imagePassword.value;
+                if (!password) {
+                    showAlert('Please enter an encryption password');
+                    return;
+                }
+                
+                if (password.length < 8) {
+                    showAlert('Password should be at least 8 characters long');
+                    return;
+                }
+                
+                const strength = document.getElementById('encryption-strength').value;
+                const keySize = strength === 'high' ? 256 : strength === 'medium' ? 192 : 128;
+                
+                // Show loading state
+                setButtonState(encryptImageBtn, 'Encrypting...', true);
+                
+                try {
+                    // Convert image to ArrayBuffer
+                    const imageArrayBuffer = await getImageArrayBuffer(originalImageFile);
+                    
+                    // Generate a random salt
+                    const salt = CryptoJS.lib.WordArray.random(128/8);
+                    
+                    // Derive key using PBKDF2
+                    const key = CryptoJS.PBKDF2(password, salt, {
+                        keySize: keySize/32,
+                        iterations: 10000,
+                        hasher: CryptoJS.algo.SHA256
+                    });
+                    
+                    // Generate random IV
+                    const iv = CryptoJS.lib.WordArray.random(128/8);
+                    
+                    // Encrypt the image data
+                    const encrypted = CryptoJS.AES.encrypt(
+                        CryptoJS.lib.WordArray.create(imageArrayBuffer),
+                        key,
+                        { 
+                            iv: iv,
+                            padding: CryptoJS.pad.Pkcs7,
+                            mode: CryptoJS.mode.CBC 
+                        }
+                    );
+                    
+                    // Create metadata object
+                    const metadata = {
+                        algorithm: 'AES-CBC-PKCS7',
+                        keySize: keySize,
+                        salt: salt.toString(),
+                        iv: iv.toString(),
+                        originalType: originalImageFile.type,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    // Combine metadata and encrypted data
+                    const encryptedData = JSON.stringify({
+                        metadata: metadata,
+                        data: encrypted.toString()
+                    });
+                    
+                    // Create blob for download
+                    encryptedImageBlob = new Blob([encryptedData], { type: 'application/json' });
+                    
+                    // Display encrypted preview (shows a lock icon instead of actual image)
+                    displayEncryptedPreview();
+                    
+                    // Show output actions
+                    outputActions.style.display = 'block';
+                    downloadImageBtn.disabled = false;
+                    
+                    // Update encryption info
+                    encMethodInfo.textContent = 'AES-' + keySize;
+                    keyStrengthInfo.textContent = keySize + '-bit';
+                    
+                } catch (error) {
+                    console.error('Encryption error:', error);
+                    showAlert('Encryption failed: ' + error.message);
+                } finally {
+                    setButtonState(encryptImageBtn, 'Encrypt Image', false);
+                }
+            });
+            
+            // Decrypt image
+            decryptImageBtn.addEventListener('click', async function() {
+                if (!encryptedImageBlob) {
+                    showAlert('Please upload an encrypted file first');
+                    return;
+                }
+                
+                const password = imagePassword.value;
+                if (!password) {
+                    showAlert('Please enter the decryption password');
+                    return;
+                }
+                
+                // Show loading state
+                setButtonState(decryptImageBtn, 'Decrypting...', true);
+                
+                try {
+                    // Read the encrypted data
+                    const encryptedData = JSON.parse(await encryptedImageBlob.text());
+                    
+                    // Get metadata
+                    const metadata = encryptedData.metadata;
+                    const salt = CryptoJS.enc.Hex.parse(metadata.salt);
+                    const iv = CryptoJS.enc.Hex.parse(metadata.iv);
+                    
+                    // Derive key using same parameters
+                    const key = CryptoJS.PBKDF2(password, salt, {
+                        keySize: metadata.keySize/32,
+                        iterations: 10000,
+                        hasher: CryptoJS.algo.SHA256
+                    });
+                    
+                    // Decrypt the data
+                    const decrypted = CryptoJS.AES.decrypt(
+                        encryptedData.data,
+                        key,
+                        {
+                            iv: iv,
+                            padding: CryptoJS.pad.Pkcs7,
+                            mode: CryptoJS.mode.CBC
+                        }
+                    );
+                    
+                    // Convert to ArrayBuffer
+                    const decryptedArrayBuffer = wordArrayToArrayBuffer(decrypted);
+                    
+                    // Create blob and display
+                    const decryptedBlob = new Blob([decryptedArrayBuffer], { type: metadata.originalType });
+                    const decryptedUrl = URL.createObjectURL(decryptedBlob);
+                    
+                    displayImagePreview(decryptedUrl);
+                    
+                    // Hide output actions
+                    outputActions.style.display = 'none';
+                    downloadImageBtn.disabled = true;
+                    
+                    // Update current image reference
+                    currentImage = decryptedUrl;
+                    isEncryptedFile = false;
+                    
+                } catch (error) {
+                    console.error('Decryption error:', error);
+                    showAlert('Decryption failed. Wrong password or corrupted data.');
+                } finally {
+                    setButtonState(decryptImageBtn, 'Decrypt Image', false);
+                }
+            });
+            
+            // Download image
+            downloadImageBtn.addEventListener('click', function() {
+                if (!encryptedImageBlob) {
+                    showAlert('No encrypted image to download');
+                    return;
+                }
+                
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(encryptedImageBlob);
+                link.download = 'encrypted-image.pawcrypt';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Revoke the blob URL after download
+                setTimeout(() => {
+                    URL.revokeObjectURL(link.href);
+                }, 100);
+            });
+            
+            // Clear image
+            clearImageBtn.addEventListener('click', function() {
+                currentImage = null;
+                encryptedImageBlob = null;
+                originalImageFile = null;
+                isEncryptedFile = false;
+                imagePreview.innerHTML = `
+                    <div class="placeholder">
+                        <div class="image-placeholder"></div>
+                        <p>Your image preview will appear here</p>
+                    </div>
+                `;
+                outputActions.style.display = 'none';
+                downloadImageBtn.disabled = true;
+                fileInput.value = '';
+                imagePassword.value = '';
+            });
+            
+            // Helper functions
+            function generateRandomPassword(length) {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+                let result = '';
+                for (let i = 0; i < length; i++) {
+                    result += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return result;
+            }
+            
+            function displayImagePreview(imageUrl) {
+                imagePreview.innerHTML = '';
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.onload = function() {
+                    URL.revokeObjectURL(imageUrl); // Clean up memory
+                };
+                imagePreview.appendChild(img);
+            }
+            
+            function displayEncryptedPreview() {
+                imagePreview.innerHTML = `
+                    <div class="encrypted-preview">
+                        <div class="lock-icon"></div>
+                        <p>Image is securely encrypted</p>
+                    </div>
+                `;
+            }
+            
+            async function getImageArrayBuffer(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsArrayBuffer(file);
+                });
+            }
+            
+            function wordArrayToArrayBuffer(wordArray) {
+                const array = wordArrayToUint8Array(wordArray);
+                return array.buffer;
+            }
+            
+            function wordArrayToUint8Array(wordArray) {
+                const len = wordArray.sigBytes;
+                const u8Array = new Uint8Array(len);
+                for (let i = 0; i < len; i++) {
+                    u8Array[i] = (wordArray.words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+                }
+                return u8Array;
+            }
+            
+            function setButtonState(button, text, disabled) {
+                button.textContent = text;
+                button.disabled = disabled;
+            }
+            
+            function showAlert(message) {
+                alert(message);
+            }
+        });
+    </script>
+</body>
+</html>
